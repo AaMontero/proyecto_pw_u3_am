@@ -28,7 +28,7 @@ public class EmpleadoRepositoryImpl implements IEmpleadoRepository {
 	}
 
 	@Override
-	public void elimiar(Integer id) {
+	public void eliminar(Integer id) {
 		this.entityManager.remove(buscar(id));
 		
 	}
