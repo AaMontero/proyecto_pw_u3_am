@@ -1,6 +1,5 @@
 package com.example.demo.uce.repository.model;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -9,51 +8,67 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Empleado")
-public class Empleado {
+@Table(name = "estudiante")
+public class Estudiante {
+
+
 	@Id
-	@Column(name = "empl_id")
-	private Integer id; 
-	@Column(name = "empl_nombre")
-	private String nombre; 
-	@Column(name = "empl_apellido")
+	@Column(name = "est_id")
+	private Integer id;
+
+	@Column(name = "est_nombre")
+	private String nombre;
+
+	@Column(name = "est_apellido")
 	private String apellido;
-	@Column(name = "empl_fecha_nacimiento")
+
+	@Column(name = "est_fecha_nacimiento")
 	private LocalDateTime fechaNacimiento;
-	@Column(name = "empl_salario")
-	private BigDecimal salario;
 	
-	
+	@Column(name ="Semestre")
+	private String semestre;
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getNombre() {
 		return nombre;
 	}
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
 	public String getApellido() {
 		return apellido;
 	}
+
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
+
 	public LocalDateTime getFechaNacimiento() {
 		return fechaNacimiento;
 	}
+
 	public void setFechaNacimiento(LocalDateTime fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
-	public BigDecimal getSalario() {
-		return salario;
+
+	public String getSemestre() {
+		return semestre;
 	}
-	public void setSalario(BigDecimal salario) {
-		this.salario = salario;
+
+	public void setSemestre(String semestre) {
+		this.semestre = semestre;
 	} 
-	
-	
+
+
+
+
 }
