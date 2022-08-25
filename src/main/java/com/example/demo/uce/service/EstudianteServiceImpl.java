@@ -1,4 +1,6 @@
 package com.example.demo.uce.service;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.demo.uce.repository.IEstudianteRepository;
@@ -29,6 +31,12 @@ public class EstudianteServiceImpl implements IEstudianteService{
 	@Override
 	public Estudiante buscarPorId(Integer id) {
 		return this.estudianteRepository.buscar(id);
+	}
+
+	@Override
+	public List<Estudiante> buscarPorSemestre(String semestre) {
+		// TODO Auto-generated method stub
+		return this.estudianteRepository.buscarPorSemestre(semestre);
 	}
 
 }

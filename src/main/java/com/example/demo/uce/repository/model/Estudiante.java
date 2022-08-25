@@ -25,7 +25,7 @@ public class Estudiante {
 	@Column(name = "est_fecha_nacimiento")
 	private LocalDateTime fechaNacimiento;
 	
-	@Column(name ="Semestre")
+	@Column(name ="semestre")
 	private String semestre;
 
 	public Integer getId() {
