@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.uce.repository.model.Empleado;
+import com.example.demo.uce.repository.model.Hijo;
 
 @Repository
 @Transactional
@@ -49,7 +50,17 @@ public class EmpleadoRepositoryImpl implements IEmpleadoRepository {
 		myQuery.setParameter("salarioDato", salario); 
 		return myQuery.getResultList();
 	}
-	
+	@Override
+	public List<Hijo> buscarHijoEmpleado(Integer id) {
+		TypedQuery<Hijo> myQuery = this.entityManager.createQuery("SELECT h from Hijo h WHERE h.empleado.id = :id",Hijo.class);
+		myQuery.setParameter("id", id); 
+		return myQuery.getResultList();
+	}
+	@Override
+	public List<Empleado> buscarTodos() {
+		TypedQuery<Empleado> myQuery = this.entityManager.createQuery("SELECT e from Empleado",Empleado.class);
+		return myQuery.getResultList();
+	}
 
 
 }

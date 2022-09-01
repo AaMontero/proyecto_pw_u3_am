@@ -3,11 +3,14 @@ package com.example.demo.uce.controller;
 import java.math.BigDecimal;
 
 import java.util.List;
-
 import javax.websocket.server.PathParam;
 import javax.xml.ws.Response;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.uce.repository.model.Empleado;
 import com.example.demo.uce.service.IEmpleadoService;
+import com.example.demo.uce.service.to.EmpleadoTo;
+import com.example.demo.uce.service.to.HijoTo;
 
 @RestController
 @RequestMapping("/empleados")
@@ -87,12 +92,13 @@ public class EmpleadoRestFulController {
 		
 	}
 	
-	@GetMapping
+	@GetMapping(name ="/salarios")
 	public List<Empleado> buscarEmpleadoPorSalario(@RequestParam(value ="salario") BigDecimal salario, @RequestParam(value ="provincia") String provincia){
 		System.out.println(provincia);
 		
 		return this.empleadoService.buscarPorSalario(salario); 
 	}
+	
 	/*
 	@GetMapping(path = "/adicional")
 	public ResponseEntity<List<Empleado>> buscarEmpleadoPorSalarioS(@PathParam(value ="sal") BigDecimal salario){
@@ -100,7 +106,21 @@ public class EmpleadoRestFulController {
 		 return ResponseEntity.ok(datos); 
 	}
 	*/
+	@GetMapping(path = "/todos")
+	public List<EmpleadoTo> buscarTodos(){
+		List<EmpleadoTo> lista =  this.empleadoService.buscarTodos();
+		//Inclusion de HATEOAS 
+		for(EmpleadoTo empl: lista) {
+			Link myLink = linkTo(methodOn(EmpleadoRestFulController.class).buscarHijos(empl.getId())).withRel("hijos");
+			empl.add(myLink); 
+		}
+		return lista; 
+	}
 	
-	
+	@GetMapping(path ="/{idEmpleado}/hijos")
+	public List<HijoTo> buscarHijos(@PathVariable("idEmpleado") Integer idEmpleado){
+		List<HijoTo> listaHijos = null; 
+		return null;
+	}
 	
 }
