@@ -3,18 +3,15 @@ package com.example.demo.uce.controller;
 import java.math.BigDecimal;
 
 import java.util.List;
-import javax.websocket.server.PathParam;
-import javax.xml.ws.Response;
-
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,16 +23,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.uce.repository.model.Empleado;
 import com.example.demo.uce.service.IEmpleadoService;
+import com.example.demo.uce.service.IHijoService;
 import com.example.demo.uce.service.to.EmpleadoTo;
 import com.example.demo.uce.service.to.HijoTo;
 
 @RestController
 @RequestMapping("/empleados")
+@CrossOrigin("https://localhost:8080/")
 public class EmpleadoRestFulController {
 	@Autowired
 	private IEmpleadoService empleadoService; 
 
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
+	@Autowired
+	private IHijoService hijoService; 
+	
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public String crear(@RequestBody Empleado empleado) {
 		String mensaje ="Estudiante insertado correctamente";   
 		try {
@@ -92,7 +94,7 @@ public class EmpleadoRestFulController {
 		
 	}
 	
-	@GetMapping(name ="/salarios")
+	@GetMapping(path ="/salarios")
 	public List<Empleado> buscarEmpleadoPorSalario(@RequestParam(value ="salario") BigDecimal salario, @RequestParam(value ="provincia") String provincia){
 		System.out.println(provincia);
 		
@@ -119,8 +121,7 @@ public class EmpleadoRestFulController {
 	
 	@GetMapping(path ="/{idEmpleado}/hijos")
 	public List<HijoTo> buscarHijos(@PathVariable("idEmpleado") Integer idEmpleado){
-		List<HijoTo> listaHijos = null; 
-		return null;
+		return this.hijoService.buscarHijosEmpleado(idEmpleado); 
 	}
 	
 }
